@@ -7,11 +7,15 @@ import helmet from "helmet";
 import createHttpError from "http-errors";
 import errorHandler from "./middlewares/ErrorHandler";
 import compression from "compression";
+import { logger } from "./middlewares/logger";
 
 const app = express();
 
 // PORT
 const PORT = APP_PORT || 4000;
+
+// Logger
+app.use(logger);
 
 // CORS
 app.use(cors(corsOptions));
@@ -38,7 +42,7 @@ app.get("/", (req, res) => {
 });
 
 // 404 Error
-app.use(async (req, res, next) => {
+app.get("*", (req, res, next) => {
 	next(createHttpError(404, "Not found"));
 });
 

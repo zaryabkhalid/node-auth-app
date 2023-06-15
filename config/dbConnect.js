@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { APP_MONGODB_URI } from "../config";
+import { logEvents } from "../middlewares/logger";
 
 export async function connectDB() {
 	try {
@@ -9,7 +10,8 @@ export async function connectDB() {
 			dbName: "Authentication",
 		});
 	} catch (error) {
-		console.log(error);
+		logEvents(`${error.message}\n`, "mongoErrorLog.log");
+		console.log(error.message);
 		process.exit(1);
 	}
 }
@@ -24,6 +26,10 @@ db.on("connected", () => {
 });
 
 db.on("error", error => {
+	logEvents(
+		`${error.code}  ${error.syscall}   ${error.hostname}`,
+		"mongoErrorLog.log",
+	);
 	console.log(`Error: ${error.name} Message: {$error.message}`);
 });
 
