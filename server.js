@@ -8,6 +8,7 @@ import createHttpError from "http-errors";
 import errorHandler from "./middlewares/ErrorHandler";
 import compression from "compression";
 import { logger } from "./middlewares/logger";
+import authRouter from "./routes/authentication";
 
 const app = express();
 
@@ -32,14 +33,7 @@ app.use(
 	}),
 );
 
-app.get("/", (req, res) => {
-	res.status(200).json({
-		data: {
-			statusCode: 200,
-			message: "Successfull Response...!",
-		},
-	});
-});
+app.use("/api/v1", authRouter);
 
 // 404 Error
 app.get("*", (req, res, next) => {
