@@ -1,1 +1,21 @@
 Logs: 2023-06-16  04:16:30	35a8bab9-acd3-4a8d-b3ed-ca110b5cdcb4	404	Not found	/blogs
+Logs: 2023-06-18  18:57:30	dca9cf51-f5a0-4b68-9aec-486ed93f02f1	500	"username" is required	/api/v1/register
+Logs: 2023-06-18  18:59:01	1a8c40a8-3c85-4090-b126-184789fb1a78	500	"username" is required	/api/v1/register
+Logs: 2023-06-18  19:00:53	1bde09aa-c815-47fd-99ee-60df3f2b517a	500	"password" with value "12345" fails to match the required pattern: /^[a-zA-Z0-9]{8,18}$/	/api/v1/register
+Logs: 2023-06-18  19:08:33	ae1a1454-686b-4053-914d-4ff7cce0f772	500	"username" is not allowed to be empty	/api/v1/register
+Logs: 2023-06-18  19:09:57	c38c3eb7-91fd-4735-923f-29f5b3d513ae	500	"username" is not allowed to be empty	/api/v1/register
+Logs: 2023-06-18  19:11:07	ec85b3c4-bdf3-4924-b4e3-e511454b83e5	500	"username" is not allowed to be empty	/api/v1/register
+Logs: 2023-06-18  19:14:20	7b15fd68-35ed-446e-96cf-20aad0157555	500	"username" is not allowed to be empty	/api/v1/register
+Logs: 2023-06-18  19:15:53	ea18c006-bd01-4ac3-86c9-c484824b2e0a	500	Internal Server Error	/api/v1/register
+Logs: 2023-06-18  19:16:34	e9bcc29e-00cd-4f8b-896c-0775dacaf5f9	500	"username" is not allowed to be empty	/api/v1/register
+Logs: 2023-06-18  19:18:13	a7036cd9-cb99-4472-85e9-0b0f8b552b17	500	"username" is not allowed to be empty	/api/v1/register
+Logs: 2023-06-18  23:18:44	1be1ecff-014d-4b4f-b3e2-47cf38aa9a17	500	"username" is not allowed to be empty	/api/v1/register
+Logs: 2023-06-18  23:19:16	24f69d75-a335-4c5a-85c0-161ad613bffe	500	Parameter "filter" to findOne() must be an object, got ZARYABKHALID@GMAIL.COM	/api/v1/register
+Logs: 2023-06-18  23:20:13	f7f2f994-2fe3-4b92-b918-f961fb601a68	500	Invalid salt. Salt must be in the form of: $Vers$log2(NumRounds)$saltvalue	/api/v1/register
+Logs: 2023-06-18  23:20:37	dc4af393-4501-4a8d-9d8a-866f26bdf44c	500	Users validation failed: password: Path `password` (`$2b$10$aE.SCD7B35TFWQAa4q9mk.96CHIQdJBZr9JKPwzlR8oF4zoHlI65q`) is longer than the maximum allowed length (18).	/api/v1/register
+Logs: 2023-06-19  00:46:26	e128edba-5b5c-48d6-bbf2-4f6430a5e2a7	400	User doesn't exists	/api/v1/login
+Logs: 2023-06-19  00:51:17	9e907541-d02c-4291-8dfb-b5fbc7e733be	400	User doesn't exists	/api/v1/login
+Logs: 2023-06-26  02:21:27	3569c59c-a10b-4e07-afd0-b3078072ab7e	400	Email already exists try different email	/api/v1/register
+Logs: 2023-06-26  02:22:13	50ee4fd4-2ad3-4b79-a8c4-b923c132077c	400	User doesn't exists	/api/v1/login
+Logs: 2023-06-26  02:23:42	1cace964-ca9a-486e-97ff-c0a572999775	400	Invalid Credentials	/api/v1/login
+Logs: 2023-06-26  02:24:14	9be801e2-7196-4d2d-af1e-7eafe6703add	400	User doesn't exists	/api/v1/login

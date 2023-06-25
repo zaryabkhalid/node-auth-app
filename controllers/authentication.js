@@ -2,50 +2,50 @@ import asyncHandler from "express-async-handler";
 import bcrypt from "bcrypt";
 import { UserSignupValidation } from "../validations/signupValidation";
 import createHttpError from "http-errors";
-import { signupService } from "../service/authService/signUpService";
-import { User } from "../models/authentication/users.model";
+import { createUser, getUser } from "../service/user/userService";
+import {
+	generateJwtToken,
+	generateRefreshJwtToken,
+} from "../utils/generateTokens";
 
 export const authController = {
 	//** SIGNUP CONTROLLER *******/
 	signup: asyncHandler(async (req, res, next) => {
-		const { firstname, lastname, email, username, password, repeat_password } =
-			req.body;
-
 		//** Validating User entered values ****
-
-		const { error } = await UserSignupValidation.validate(req.body);
-
-		if (error) next(createHttpError(400, error.message));
-
-		try {
-			const userExists = await User.findOne({ email: email }).exec();
-			if (userExists) {
-				return next(createHttpError(400, "Email already Exists..."));
-			}
-		} catch (error) {
-			return next(error);
-		}
-
-		const user = await signupService({
-			firstname,
-			lastname,
-			username,
-			email,
-			password,
-			repeat_password,
+		UserSignupValidation.validate(req.body, (err, data) => {
+			if (err) return next(err);
 		});
 
-		if (user) {
-			res.status(201).json({
-				data: {
-					firstname: user.firstname,
-					lastname: user.lastname,
-					username: user.username,
-					email: user.email,
-				},
-			});
-		} else {
-			next(createHttpError(400, "User registration fails..."));
+		try {
+			const { firstname, lastname, email, username, password } = req.body;
+			const emailExists = await getUser(email);
+			if (emailExists) {
+				return next(createHttpError.BadRequest("Email already exists try different email"));
+			}
+			const userData = {
+				firstname: firstname,
+				lastname: lastname,
+				username: username,
+				email: email,
+				password: password,
+			};
+
+			const user = await createUser(userData);
+
+			if (user) {
+				res.status(201).json({
+					success: true,
+					statuscode: 201,
+					data: {
+						username: user.username,
+						email: user.email,
+					},
+				});
+			} else {
+				next(createHttpError.BadRequest("Registration Fails"));
+			}
+		} catch (error) {
+			next(error);
 		}
 	}),
 
@@ -55,24 +55,40 @@ export const authController = {
 
 		//* Checking for empty values
 		if (!email || !password) {
-			return next(createHttpError(400, "Must fill all values"));
+			return next(createHttpError.BadRequest("Invalid Credentials"));
 		}
 
 		//* Validating User Exists or Not
 		try {
-			const userExists = await User.findOne({ email: email }).exec();
+			const userExists = await getUser(email);
 			if (!userExists) {
-				return next(createHttpError(400, "User doesn't exists"));
+				return next(createHttpError.BadRequest("User doesn't exists"));
 			}
-
 			const user = await bcrypt.compare(password, userExists.password);
 			if (!user) {
-				return next(createHttpError(400, "Invalid Cradentials"));
+				return next(createHttpError.BadRequest("Invalid Password"));
 			}
+			const payload = {
+				email: userExists.email,
+				id: userExists._id,
+				role: userExists.role,
+			};
 
-			res.send("User Logged In...");
+			const token = await generateJwtToken(payload);
+			const refToken = await generateRefreshJwtToken(payload);
+
+			res.status(200).json({
+				data: {
+					email: userExists.email,
+					username: userExists.username,
+					tokens: {
+						AccessToken: token,
+						RefreshToken: refToken,
+					},
+				},
+			});
 		} catch (error) {
-			return next(error);
+			next(error);
 		}
 	}),
 };
