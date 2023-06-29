@@ -5,6 +5,7 @@ import { corsOptions } from "./config/corsOptions";
 import { jsonOptions } from "./config/jsonOptions";
 import helmet from "helmet";
 import createHttpError from "http-errors";
+import cookieParser from "cookie-parser";
 import errorHandler from "./middlewares/ErrorHandler";
 import compression from "compression";
 import { logger } from "./middlewares/logger";
@@ -26,12 +27,14 @@ app.use(helmet());
 
 app.use(compression());
 
-app.use(express.json(jsonOptions));
 app.use(
 	express.urlencoded({
 		extended: true,
 	}),
 );
+app.use(express.json(jsonOptions));
+// Cookie Parser
+app.use(cookieParser());
 
 app.use("/api/v1", authRouter);
 

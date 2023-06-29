@@ -59,6 +59,7 @@ const UserSchema = new Schema(
 		socialmedialinks: {
 			type: [String],
 		},
+		refreshToken: [String],
 	},
 	{
 		timestamps: true,

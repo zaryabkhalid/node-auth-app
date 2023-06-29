@@ -19,3 +19,42 @@ Logs: 2023-06-26  02:21:27	3569c59c-a10b-4e07-afd0-b3078072ab7e	400	Email alread
 Logs: 2023-06-26  02:22:13	50ee4fd4-2ad3-4b79-a8c4-b923c132077c	400	User doesn't exists	/api/v1/login
 Logs: 2023-06-26  02:23:42	1cace964-ca9a-486e-97ff-c0a572999775	400	Invalid Credentials	/api/v1/login
 Logs: 2023-06-26  02:24:14	9be801e2-7196-4d2d-af1e-7eafe6703add	400	User doesn't exists	/api/v1/login
+Logs: 2023-06-29  17:33:28	8a003588-d7fd-486b-881b-e13672f78193	401	Unauthorized	/api/v1/me
+Logs: 2023-06-29  17:35:49	8684bfe4-40da-4e54-a167-73a3b9a2baaf	401	Unauthorized	/api/v1/me
+Logs: 2023-06-29  17:36:20	c13485d4-2ac5-4751-9de2-b3eb7da618e0	401	Unauthorized	/api/v1/me
+Logs: 2023-06-29  17:37:33	39bc018c-41a0-4c44-a55e-de59c03629ee	401	Unauthorized	/api/v1/me
+Logs: 2023-06-29  17:38:29	045b1e86-0e36-4a9a-a074-6d5718eb16b9	401	Unauthorized	/api/v1/me
+Logs: 2023-06-29  17:39:14	b4d715a7-0de9-4fd4-bbe2-f75e3900cb48	500	Converting circular structure to JSON
+    --> starting at object with constructor 'Socket'
+    |     property 'parser' -> object with constructor 'HTTPParser'
+    --- property 'socket' closes the circle	/api/v1/me
+Logs: 2023-06-29  17:44:12	b156a25c-84db-4ad2-9514-815101b5ce2e	401	Unauthorized	/api/v1/me
+Logs: 2023-06-29  17:44:40	8fdf0488-de0d-4c22-96af-1d4730c2683e	401	Unauthorized	/api/v1/me
+Logs: 2023-06-29  17:46:11	67a64d95-04b5-47f7-b5ed-b89496d19e34	403	Forbidden	/api/v1/me
+Logs: 2023-06-29  17:46:41	86cd9c6d-8533-4771-b2b0-4ff518807976	401	Unauthorized	/api/v1/me
+Logs: 2023-06-30  00:55:05	76a7b130-14b6-4d95-bd97-8616fb23bdb1	404	User Not Found	/api/v1/me
+Logs: 2023-06-30  01:22:59	141b3271-9d13-4704-befc-f9ea50568ec9	403	Forbidden	/api/v1/me
+Logs: 2023-06-30  01:23:16	d51ca4d5-7aa1-4766-93ce-bd118578c335	401	Unauthorized	/api/v1/me
+Logs: 2023-06-30  01:23:21	5c559f83-d70d-492e-b43e-055ba30175fa	401	Unauthorized	/api/v1/me
+Logs: 2023-06-30  01:23:26	057b0adc-14d8-4c75-80cc-f66145192137	403	Forbidden	/api/v1/refresh-token
+Logs: 2023-06-30  01:23:40	c2a39689-1932-4688-8245-3baa92a7cef0	403	Forbidden	/api/v1/refresh-token
+Logs: 2023-06-30  01:25:39	f92f9ef7-b042-40b0-9054-846cfdeeb8b3	403	Forbidden	/api/v1/refresh-token
+Logs: 2023-06-30  01:26:04	056741ee-4363-4504-8469-093fa177e242	403	Forbidden	/api/v1/refresh-token
+Logs: 2023-06-30  01:26:14	4181a543-6b23-459e-933b-0d55436da3e9	403	Forbidden	/api/v1/refresh-token
+Logs: 2023-06-30  01:27:11	706f42b6-7b88-4266-b22b-23d573a24c64	403	Forbidden	/api/v1/refresh-token
+Logs: 2023-06-30  01:27:55	9a4390b1-c2b0-42d3-bea8-84a8b7be072f	403	Forbidden	/api/v1/refresh-token
+Logs: 2023-06-30  01:29:11	aacbc656-3d0f-4457-a91c-bfed7791f8ea	403	Forbidden	/api/v1/refresh-token
+Logs: 2023-06-30  01:29:38	b338e4db-068a-49dc-ba48-a809a898c50c	403	Forbidden	/api/v1/refresh-token
+Logs: 2023-06-30  01:29:56	f0f7b8ce-931f-4b01-9906-5f62b86e4d43	403	Forbidden	/api/v1/refresh-token
+Logs: 2023-06-30  01:30:26	5cdfefda-6e09-4973-8ac4-8753288eb532	403	Forbidden	/api/v1/refresh-token
+Logs: 2023-06-30  01:31:48	de74e921-44f4-42fa-bc85-83a99da61b53	403	Forbidden	/api/v1/refresh-token
+Logs: 2023-06-30  01:33:26	8935bd50-03b6-4fd6-bae1-40985e16a9c6	403	Forbidden	/api/v1/refresh-token
+Logs: 2023-06-30  01:35:45	d77c431e-6082-47f0-8cab-d73babba245b	403	Forbidden	/api/v1/refresh-token
+Logs: 2023-06-30  01:38:12	88aa57a2-1fc1-4d8f-a2c5-b0d66877b4b5	401	Unauthorized	/api/v1/me
+Logs: 2023-06-30  01:38:39	1e4ae762-a168-4c6d-bfea-ba9b7c2d1a4f	403	Forbidden	/api/v1/me
+Logs: 2023-06-30  01:38:52	0807216e-83fa-412c-9b82-0374acd4977a	401	Unauthorized	/api/v1/me
+Logs: 2023-06-30  01:38:58	6df27001-d2b6-443d-9bdb-e49b508e10e2	401	Unauthorized	/api/v1/me
+Logs: 2023-06-30  01:39:37	3a61171b-7aa8-428b-91d6-dad84dfa51a8	401	Unauthorized	/api/v1/me
+Logs: 2023-06-30  02:53:15	05c6b6db-e04c-4d1d-aabe-9ebad03f30c7	403	Forbidden	/api/v1/me
+Logs: 2023-06-30  02:53:24	651d1a6a-c15c-4257-99fb-f888023d1cea	401	Unauthorized	/api/v1/me
+Logs: 2023-06-30  02:53:34	5807724b-f235-4eda-8098-20c30e686228	401	Unauthorized	/api/v1/me
