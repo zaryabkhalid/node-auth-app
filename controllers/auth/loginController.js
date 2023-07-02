@@ -9,6 +9,7 @@ import {
 
 //*** LOGIN CONTROLLER */
 export default asyncHandler(async function signin(req, res, next) {
+	const cookies = req.cookies;
 	const { email, password } = req.body;
 
 	//* Checking for empty values
@@ -37,13 +38,26 @@ export default asyncHandler(async function signin(req, res, next) {
 
 		//! Generating Tokens
 		const token = await generateJwtToken(payload);
-		const refToken = await generateRefreshJwtToken(payload);
+		const newrefToken = await generateRefreshJwtToken({ email: payload.email });
+
+		const newRefreshTokenArray = !cookies.tokenID
+			? userExists.refreshToken
+			: userExists.refreshToken.filter(rt => rt !== cookies.tokenID);
+		if (cookies.tokenID) {
+			res.clearCookie("tokenID", {
+				httpOnly: true,
+				secure: true,
+				sameSite: "none",
+			});
+		}
 
 		//! Saving Refresh Token in Database
-		userExists.refreshToken.push(refToken);
+		userExists.refreshToken = [...newRefreshTokenArray, newrefToken];
 		await userExists.save();
-		res.cookie("tokenID", refToken, {
+		res.cookie("newrefToken", refToken, {
 			httpOnly: true,
+			secure: true,
+			sameSite: "None",
 			maxAge: 30 * 24 * 60 * 60 * 1000,
 		});
 
