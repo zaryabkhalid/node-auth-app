@@ -10,7 +10,7 @@ import { APP_REFRESH_JWT_SECRET } from "../../config";
 
 export default asyncHandler(async function refreshToken(req, res, next) {
 	const cookies = req.cookies;
-	if (!cookies.tokenID || cookies.tokenID === undefined) {
+	if (!cookies.tokenID || cookies.tokenID === null) {
 		return next(createHttpError.Unauthorized());
 	}
 	const refreshToken = cookies.tokenID;

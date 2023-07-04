@@ -2,9 +2,9 @@ import asyncHandler from "express-async-handler";
 import createHttpError from "http-errors";
 import { User } from "../../models/authentication/users.model";
 
-asyncHandler(async function logout(req, res, next) {
+export default asyncHandler(async function logout(req, res, next) {
 	const cookies = req.cookies;
-	if (!cookies.tokenID || cookies.tokenID === undefined) {
+	if (!cookies.tokenID || cookies.tokenID === null) {
 		return next(createHttpError("204", "No content"));
 	}
 	const refreshToken = cookies.tokenID;
@@ -28,5 +28,3 @@ asyncHandler(async function logout(req, res, next) {
 	});
 	res.sendStatus(204);
 });
-
-export default logout;
