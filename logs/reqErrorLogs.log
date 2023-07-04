@@ -58,3 +58,36 @@ Logs: 2023-06-30  01:39:37	3a61171b-7aa8-428b-91d6-dad84dfa51a8	401	Unauthorized
 Logs: 2023-06-30  02:53:15	05c6b6db-e04c-4d1d-aabe-9ebad03f30c7	403	Forbidden	/api/v1/me
 Logs: 2023-06-30  02:53:24	651d1a6a-c15c-4257-99fb-f888023d1cea	401	Unauthorized	/api/v1/me
 Logs: 2023-06-30  02:53:34	5807724b-f235-4eda-8098-20c30e686228	401	Unauthorized	/api/v1/me
+Logs: 2023-07-04  13:44:20	296ff8ad-a9f5-4bf3-970e-7fbfaa31496d	500	refToken is not defined	/api/v1/login
+Logs: 2023-07-04  13:47:39	89827f39-b4ad-4ca0-9a9a-00cbd75a2dbe	500	No content	/api/v1/logout
+Logs: 2023-07-04  14:02:13	2f7efa89-7c1a-4f94-b948-58782808c354	500	refToken is not defined	/api/v1/login
+Logs: 2023-07-04  14:03:18	5ac0e901-b231-45ee-b27a-20fe11111318	401	Email already exists try different email	/api/v1/register
+Logs: 2023-07-04  14:03:42	46d2fc27-f3c9-43ec-924b-8eeedbe52a58	400	Email already exists try different email	/api/v1/register
+Logs: 2023-07-04  14:38:21	c1d58730-0419-458a-a8e3-cf4a533b7a80	401	Email or password can't be empty	/api/v1/login
+Logs: 2023-07-04  14:38:32	cd521446-bf84-4147-8e23-a084e965aabb	401	User doesn't exists	/api/v1/login
+Logs: 2023-07-04  14:38:54	1af60fdb-302c-46a8-99bd-274ee2744d56	401	User doesn't exists	/api/v1/login
+Logs: 2023-07-04  14:39:18	db5f8f6d-e16f-4781-b115-fb708069ae8b	500	refToken is not defined	/api/v1/login
+Logs: 2023-07-04  14:40:32	49698b2c-c2b9-498a-8043-085f3e6172b2	401	Email or password can't be empty	/api/v1/login
+Logs: 2023-07-04  14:40:38	3f19689b-7163-49c0-b04c-032e93256bfb	500	refToken is not defined	/api/v1/login
+Logs: 2023-07-04  14:43:19	559692d6-fd6d-4c1b-ba94-ff73603dcfe0	500	refToken is not defined	/api/v1/login
+Logs: 2023-07-04  14:43:46	561be6d4-932d-4dd4-a1b4-68902249e243	401	Invalid Password	/api/v1/login
+Logs: 2023-07-04  14:48:33	444d81d7-2804-46a9-9b4c-d2e4eed8403d	401	Email or password can't be empty	/api/v1/login
+Logs: 2023-07-04  14:48:44	7229cecf-e109-4ef2-96da-0b9ca3f933d8	401	Email or password can't be empty	/api/v1/login
+Logs: 2023-07-04  14:48:58	154fefee-dfff-4fa1-8c69-df73f4ce9d1f	401	Email or password can't be empty	/api/v1/login
+Logs: 2023-07-04  14:49:05	2edd9abc-bd8e-45a9-b48e-fa3666cd3570	401	User doesn't exists	/api/v1/login
+Logs: 2023-07-04  14:49:22	e283da4b-0afd-4ca7-bdf6-05b59d3ccd19	401	Invalid Password	/api/v1/login
+Logs: 2023-07-04  14:49:49	97617c53-19b0-4a70-a1d7-ef857441f1c9	401	Unauthorized	/api/v1/me
+Logs: 2023-07-04  14:49:54	e44b59c7-6459-454b-ab67-97b3e9fd3b8c	401	Unauthorized	/api/v1/me
+Logs: 2023-07-04  14:50:06	cb297d3e-0c8d-41f5-916c-2f8993177004	401	Unauthorized	/api/v1/me
+Logs: 2023-07-04  14:50:12	783ec1c1-e5b4-46af-886a-9b33a6d36c2b	401	Unauthorized	/api/v1/me
+Logs: 2023-07-04  15:05:13	ef46476f-c16c-4b11-9d83-e1b8136ba4ff	401	Unauthorized	/api/v1/me
+Logs: 2023-07-04  15:05:33	c0ac6eb4-4803-4dfd-8a1e-b16b3153cfeb	401	Unauthorized	/api/v1/me
+Logs: 2023-07-04  15:07:19	5a8cf33e-df40-4d9f-94d8-3b1aa3a894b2	401	Unauthorized	/api/v1/me
+Logs: 2023-07-04  15:07:27	323586de-d43e-4382-9ea4-d39b4d6b7cd1	500	No content	/api/v1/logout
+Logs: 2023-07-04  15:09:39	f1f12932-a465-409a-b372-0826d8d649aa	204	No-Content	/api/v1/logout
+Logs: 2023-07-04  15:11:15	a1f0fd19-3bd1-407e-a75d-56e8349d083e	401	Unauthorized	/api/v1/me
+Logs: 2023-07-04  15:12:54	1d94e1e2-211e-45c5-ae67-33c10bef32dd	204	No-Content	/api/v1/logout
+Logs: 2023-07-04  15:13:42	c92e38ba-5967-41be-b7d5-d7d84fe801c2	401	Unauthorized	/api/v1/me
+Logs: 2023-07-04  15:14:20	54b85e82-5038-4204-8724-7277ae3f82f2	401	Unauthorized	/api/v1/me
+Logs: 2023-07-04  15:16:41	8bd5bac7-8871-4e05-bc31-7584fddf3609	401	Unauthorized	/api/v1/me
+Logs: 2023-07-04  15:18:42	dcbefbff-d503-402e-bce6-8bd71eee42de	401	Unauthorized	/api/v1/me
