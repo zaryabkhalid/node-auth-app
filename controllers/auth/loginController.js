@@ -38,7 +38,9 @@ export default asyncHandler(async function signin(req, res, next) {
 
 		//! Generating Tokens
 		const token = await generateJwtToken(payload);
-		const newrefToken = await generateRefreshJwtToken({ email: payload.email });
+		const newrefToken = await generateRefreshJwtToken({
+			email: userExists.email,
+		});
 
 		const newRefreshTokenArray = !cookies.tokenID
 			? userExists.refreshToken
@@ -54,10 +56,10 @@ export default asyncHandler(async function signin(req, res, next) {
 		//! Saving Refresh Token in Database
 		userExists.refreshToken = [...newRefreshTokenArray, newrefToken];
 		await userExists.save();
-		res.cookie("newrefToken", refToken, {
+		res.cookie("tokenID", newrefToken, {
 			httpOnly: true,
 			secure: true,
-			sameSite: "None",
+			sameSite: "none",
 			maxAge: 30 * 24 * 60 * 60 * 1000,
 		});
 

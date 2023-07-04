@@ -14,9 +14,7 @@ export default asyncHandler(async function signup(req, res, next) {
 		const emailExists = await getUser(email);
 		if (emailExists) {
 			return next(
-				createHttpError.Unauthorized(
-					"Email already exists try different email",
-				),
+				createHttpError.BadRequest("Email already exists try different email"),
 			);
 		}
 		const userData = {
@@ -42,6 +40,6 @@ export default asyncHandler(async function signup(req, res, next) {
 			next(createHttpError.InternalServerError("Registration Fails"));
 		}
 	} catch (error) {
-		next(error);
+		next(createHttpError.InternalServerError(error.message));
 	}
 });

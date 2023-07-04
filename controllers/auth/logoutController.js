@@ -5,11 +5,12 @@ import { User } from "../../models/authentication/users.model";
 export default asyncHandler(async function logout(req, res, next) {
 	const cookies = req.cookies;
 	if (!cookies.tokenID || cookies.tokenID === null) {
-		return next(createHttpError("204", "No content"));
+		return next(createHttpError(204, "No-Content"));
 	}
 	const refreshToken = cookies.tokenID;
 
 	const user = await User.findOne({ refreshToken }).exec();
+	console.log("🚀 ~ file: logoutController.js:13 ~ logout ~ user:", user);
 	if (!user) {
 		res.clearCookie("tokenID", {
 			httpOnly: true,
@@ -26,5 +27,8 @@ export default asyncHandler(async function logout(req, res, next) {
 		secure: true,
 		sameSite: "none",
 	});
-	res.sendStatus(204);
+	res.status(204);
+	res.json({
+		message: "Logout Successfull...",
+	});
 });
