@@ -26,6 +26,8 @@ export default asyncHandler(async function refreshToken(req, res, next) {
 			if (err) {
 				return next(createHttpError.Unauthorized());
 			}
+
+			//* Validating hacked User
 			const hackedUser = await User.findOne({ email: decode.email }).exec();
 			hackedUser.refreshToken = [];
 			const result = await hackedUser.save();
