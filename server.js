@@ -1,4 +1,3 @@
-import { APP_PORT } from "./config";
 import express from "express";
 import cors from "cors";
 import { corsOptions } from "./config/corsOptions";
@@ -13,19 +12,11 @@ import authRouter from "./routes/authentication";
 
 const app = express();
 
-// PORT
-const PORT = APP_PORT || 4000;
-
 // Logger
 app.use(logger);
 
 // CORS
 app.use(cors(corsOptions));
-
-// HELMET for headers-security
-app.use(helmet());
-
-app.use(compression());
 
 app.use(
 	express.urlencoded({
@@ -33,8 +24,14 @@ app.use(
 	}),
 );
 app.use(express.json(jsonOptions));
+
 // Cookie Parser
 app.use(cookieParser());
+
+// HELMET for headers-security
+app.use(helmet());
+
+app.use(compression());
 
 app.use("/api/v1", authRouter);
 

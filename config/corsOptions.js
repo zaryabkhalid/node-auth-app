@@ -1,15 +1,13 @@
-import { whiteList } from "./allowedUrls";
+import { allowedOrigins } from "./allowedOrigins";
 
 export const corsOptions = {
-	origin: function (origin, callback) {
-		if (whiteList.indexOf(origin) !== -1 || !origin) {
+	origin: (origin, callback) => {
+		if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
 			callback(null, true);
 		} else {
-			callback(new Error("Not Allowed by CORS"));
+			callback(new Error("Origin not allowed by CORS"));
 		}
 	},
-	optionsSuccessStatus: true,
-	methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+	optionsSuccessStatus: 200,
 	credentials: true,
-	maxAge: 3600,
 };
