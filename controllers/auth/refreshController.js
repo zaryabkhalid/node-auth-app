@@ -1,17 +1,15 @@
-import asyncHandler from "express-async-handler";
+import asyncErrorHandler from "../../errors/asyncErrorHandler";
 import Jwt from "jsonwebtoken";
-import createHttpError from "http-errors";
-import {
-	generateJwtToken,
-	generateRefreshJwtToken,
-} from "../../utils/generateTokens";
+import CustomError from "../../errors/CustomError";
+import { generateJwtToken, generateRefreshJwtToken } from "../../utils/generateTokens";
 import { User } from "../../models/authentication/users.model";
 import { APP_REFRESH_JWT_SECRET } from "../../config";
 
-export default asyncHandler(async function refreshToken(req, res, next) {
+export default asyncErrorHandler(async function refreshToken(req, res, next) {
 	const cookies = req.cookies;
 	if (!cookies.tokenID || cookies.tokenID === undefined) {
-		return next(createHttpError.Unauthorized());
+		const error = new CustomError(401, "Unauthorized user");
+		return next(error);
 	}
 	const refreshToken = cookies.tokenID;
 	res.clearCookie("tokenID", {
@@ -20,33 +18,32 @@ export default asyncHandler(async function refreshToken(req, res, next) {
 		secure: true,
 	});
 
-	const user = await User.findOne({ refreshToken }).exec();
+	const user = await User.findOne({ refreshToken });
 	if (!user) {
 		Jwt.verify(refreshToken, APP_REFRESH_JWT_SECRET, async (err, decode) => {
 			if (err) {
-				return next(createHttpError.Unauthorized());
+				const error = new CustomError(401, "Unauthorized...");
+				return next(error);
 			}
 
 			//* Validating hacked User
 			const hackedUser = await User.findOne({ email: decode.email }).exec();
 			hackedUser.refreshToken = [];
-			const result = await hackedUser.save();
+			await hackedUser.save({ validateBeforeSave: false });
 		});
-		return next(createHttpError.Forbidden());
+		return next(new CustomError(403, "Forbidden"));
 	}
 
 	//* Filtering out the different refreshTokens
-	const newRefreshTokenArray = user.refreshToken.filter(
-		rt => rt !== refreshToken,
-	);
+	const newRefreshTokenArray = user.refreshToken.filter(rt => rt !== refreshToken);
 
 	Jwt.verify(refreshToken, APP_REFRESH_JWT_SECRET, async (err, decode) => {
 		if (err) {
 			user.refreshToken = [...newRefreshTokenArray];
-			const result = await user.save();
+			const result = await user.save({ validateBeforeSave: false });
 		}
 		if (err || user.email !== decode.email) {
-			return createHttpError.Forbidden();
+			return next(403, "Forbidden");
 		}
 		const payload = {
 			username: user.username,
@@ -63,7 +60,7 @@ export default asyncHandler(async function refreshToken(req, res, next) {
 
 		//* Saving refreshToken with current User
 		user.refreshToken = [...newRefreshTokenArray, newRefreshToken];
-		const result = await user.save();
+		const result = await user.save({ validateBeforeSave: false });
 
 		//* Creating secure cookie with refresh Token
 		res.cookie("tokenID", newRefreshToken, {

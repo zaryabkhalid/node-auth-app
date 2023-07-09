@@ -1,16 +1,14 @@
-import asyncHandler from "express-async-handler";
-import createHttpError from "http-errors";
+import asyncErrorHandler from "../../errors/asyncErrorHandler";
+import CustomError from "../../errors/CustomError";
 import { User } from "../../models/authentication/users.model";
 
-export default asyncHandler(async function logout(req, res, next) {
+export default asyncErrorHandler(async function logout(req, res, next) {
 	const cookies = req.cookies;
 	if (!cookies.tokenID || cookies.tokenID === null) {
-		return next(createHttpError(204, "No-Content"));
+		return next(new CustomError(204, "No-Content"));
 	}
 	const refreshToken = cookies.tokenID;
-
-	const user = await User.findOne({ refreshToken }).exec();
-	console.log("🚀 ~ file: logoutController.js:13 ~ logout ~ user:", user);
+	const user = await User.findOne({ refreshToken });
 	if (!user) {
 		res.clearCookie("tokenID", {
 			httpOnly: true,
@@ -20,15 +18,14 @@ export default asyncHandler(async function logout(req, res, next) {
 		res.sendStatus(204);
 	}
 	user.refreshToken = user.refreshToken.filter(rt => rt !== refreshToken);
-	const result = await user.save();
+	await user.save({ validateBeforeSave: false });
 
 	res.clearCookie("tokenID", {
 		httpOnly: true,
 		secure: true,
 		sameSite: "none",
 	});
-	res.status(204);
-	res.json({
+	res.status(204).json({
 		message: "Logout Successfull...",
 	});
 });

@@ -1,8 +1,12 @@
 import bcrypt from "bcrypt";
 
-const genPasswordHash = async password => {
-	const hashPassword = await bcrypt.hash(password, 10);
-	return hashPassword;
+const genHashPassword = async password => {
+	try {
+		const hashPassword = await bcrypt.hash(password, 10);
+		return hashPassword;
+	} catch (error) {
+		throw new Error("password encryption failed");
+	}
 };
 
-export default genPasswordHash;
+export default genHashPassword;

@@ -1,45 +1,26 @@
 import mongoose from "mongoose";
 import { APP_MONGODB_URI } from "../config";
-import { logEvents } from "../middlewares/logger";
 
-export async function connectDB() {
-	try {
-		await mongoose.connect(APP_MONGODB_URI, {
-			useNewUrlParser: true,
-			useUnifiedTopology: true,
-			dbName: "Authentication",
-		});
-	} catch (error) {
-		logEvents(`${error.message}\n`, "mongoErrorLog.log");
-		console.log(error.message);
-		process.exit(1);
-	}
+export function connectDB() {
+	mongoose.connect(APP_MONGODB_URI, {
+		useNewUrlParser: true,
+		dbName: "Authentication",
+	});
 }
-const db = mongoose.connection;
 
-db.on("connecting", () => {
-	console.log("Trying to establish a connection to database...");
+mongoose.connection.on("connected", () => {
+	console.log("Connected to Database");
 });
-
-db.on("connected", () => {
-	console.log("Connected to database...");
+mongoose.connection.on("error", err => {
+	console.error("MongoDB connection error:", err);
 });
-
-db.on("error", error => {
-	logEvents(
-		`${error.code}  ${error.syscall}   ${error.hostname}`,
-		"mongoErrorLog.log",
-	);
-	console.log(`Error: ${error.name} Message: {$error.message}`);
-});
-
-db.on("disconnected", () => {
-	console.log("disconnected...");
+mongoose.connection.on("disconnected", () => {
+	console.log("Disconnected from MongoDB");
 });
 
 process.on("SIGINT", () => {
-	db.close(() => {
-		console.log("Database disconnected...");
+	mongoose.connection.close(() => {
+		console.log("MongoDB connection closed due to application termination");
 		process.exit(0);
 	});
 });

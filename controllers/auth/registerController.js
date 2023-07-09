@@ -1,45 +1,29 @@
-import asyncHandler from "express-async-handler";
-import { UserSignupValidation } from "../../validations/signupValidation";
-import createHttpError from "http-errors";
-import { createUser, getUser } from "../../service/user/userService";
+import CustomError from "../../errors/CustomError";
+import asyncErrorHandler from "../../errors/asyncErrorHandler";
+import { User } from "../../models/authentication/users.model";
 
-export default asyncHandler(async function signup(req, res, next) {
-	//** Validating User entered values ****
-	UserSignupValidation.validate(req.body, (err, data) => {
-		if (err) return next(err);
-	});
+export default asyncErrorHandler(async function signup(req, res, next) {
+	const { firstname, lastname, email, username, password, confirm_password } = req.body;
 
-	try {
-		const { firstname, lastname, email, username, password } = req.body;
-		const emailExists = await getUser(email);
-		if (emailExists) {
-			return next(
-				createHttpError.BadRequest("Email already exists try different email"),
-			);
-		}
-		const userData = {
-			firstname: firstname,
-			lastname: lastname,
-			username: username,
-			email: email,
-			password: password,
-		};
+	const userData = {
+		firstname: firstname,
+		lastname: lastname,
+		username: username,
+		email: email,
+		password: password,
+		confirm_password: confirm_password,
+	};
 
-		const user = await createUser(userData);
+	const user = new User(userData);
+	await user.save();
 
-		if (user) {
-			res.status(201).json({
-				success: true,
-				statuscode: 201,
-				data: {
-					username: user.username,
-					email: user.email,
-				},
-			});
-		} else {
-			next(createHttpError.InternalServerError("Registration Fails"));
-		}
-	} catch (error) {
-		next(createHttpError.InternalServerError(error.message));
+	if (!user) {
+		return next(new CustomError(500, "User Registration fails"));
 	}
+
+	res.status(201).json({
+		success: true,
+		statuscode: 201,
+		message: "Registration Successfull",
+	});
 });
