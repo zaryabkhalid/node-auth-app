@@ -14,7 +14,7 @@ export default asyncErrorHandler(async function signin(req, res, next) {
 		return next(error);
 	}
 
-	//* Validating User Exists or Not
+	//* Validating Users Email & Password
 	const userExists = await User.findOne({ email }).select("+password");
 	if (!userExists || !(await userExists.comparePassword(password, userExists.password))) {
 		const error = new CustomError(400, "Incorrect Email or password");
@@ -36,9 +36,7 @@ export default asyncErrorHandler(async function signin(req, res, next) {
 	});
 
 	//* Checking if cookie already exist or not
-	const newRefreshTokenArray = !cookies.tokenID
-		? userExists.refreshToken
-		: userExists.refreshToken.filter(rt => rt !== cookies.tokenID);
+	const newRefreshTokenArray = !cookies.tokenID ? userExists.refreshToken : userExists.refreshToken.filter(rt => rt !== cookies.tokenID);
 	if (cookies.tokenID) {
 		res.clearCookie("tokenID", {
 			httpOnly: true,
