@@ -5,6 +5,7 @@ import getProfile from "../../controllers/auth/profileController";
 import refreshToken from "../../controllers/auth/refreshController";
 import verifyJWT from "../../middlewares/verifyJwt";
 import logout from "../../controllers/auth/logoutController";
+import { verifyUserAccount } from "../../controllers/auth/accountVerifyController";
 
 const router = express.Router();
 /**
@@ -13,6 +14,14 @@ const router = express.Router();
  **  USER Registration
  */
 router.post("/register", signup);
+
+/**
+ **  GET REQUEST
+ **  PUBLIC
+ **  USER Account Verify
+ */
+
+router.get("/verify", verifyUserAccount);
 
 /**
  **  POST REQUEST
