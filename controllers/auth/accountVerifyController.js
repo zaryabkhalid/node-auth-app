@@ -2,7 +2,7 @@ import CustomError from "../../errors/CustomError";
 import asyncErrorHandler from "../../errors/asyncErrorHandler";
 import { User } from "../../models/authentication/users.model";
 
-export const verifyUserAccount = asyncErrorHandler(async (req, res, next) => {
+const verifyUserAccount = asyncErrorHandler(async (req, res, next) => {
 	const id = req.query.id;
 	const userVerify = await User.findOneAndUpdate({ id }, { $set: { isVerified: true } });
 	if (!userVerify) {
@@ -14,3 +14,5 @@ export const verifyUserAccount = asyncErrorHandler(async (req, res, next) => {
 		message: "Account verify",
 	});
 });
+
+export default verifyUserAccount;

@@ -5,7 +5,9 @@ import getProfile from "../../controllers/auth/profileController";
 import refreshToken from "../../controllers/auth/refreshController";
 import verifyJWT from "../../middlewares/verifyJwt";
 import logout from "../../controllers/auth/logoutController";
-import { verifyUserAccount } from "../../controllers/auth/accountVerifyController";
+import verifyUserAccount from "../../controllers/auth/accountVerifyController";
+import resetPassword from "../../controllers/auth/resetPasswordController";
+import forgetPassword from "../../controllers/auth/forgetPasswordController";
 
 const router = express.Router();
 /**
@@ -51,5 +53,14 @@ router.get("/logout", logout);
  */
 
 router.get("/me", verifyJWT, getProfile);
+
+/**
+ ** POST & PATCH REQUEST
+ ** PRIVATE
+ ** FORGOT PASSWORD & RESET PASSWORD
+ */
+
+router.post("/forgetPassword", forgetPassword);
+router.patch("/resetPassword/:token", resetPassword);
 
 export default router;

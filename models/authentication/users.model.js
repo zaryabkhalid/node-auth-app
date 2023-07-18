@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import regEx from "../../validations/regex";
+import crypto from "crypto";
 
 const { Schema } = mongoose;
 
@@ -71,6 +72,21 @@ const UserSchema = new Schema(
 			},
 		},
 
+		passwordChangedAt: {
+			type: Date,
+		},
+		passwordResetToken: {
+			type: String,
+		},
+		passwordResetTokenExpire: {
+			type: Date,
+		},
+
+		isVerified: {
+			type: Boolean,
+			default: false,
+		},
+
 		dob: {
 			type: Date,
 		},
@@ -83,11 +99,6 @@ const UserSchema = new Schema(
 
 		profilepic: {
 			type: String,
-		},
-
-		isVerified: {
-			type: Boolean,
-			default: false,
 		},
 
 		socialmedialinks: {
@@ -110,6 +121,14 @@ UserSchema.pre("save", async function (next) {
 
 UserSchema.methods.comparePassword = async function (password, passwordDB) {
 	return await bcrypt.compare(password, passwordDB);
+};
+
+UserSchema.methods.createResetPasswordToken = function () {
+	const resetToken = crypto.randomBytes(32).toString("hex");
+	this.passwordResetToken = crypto.createHash("sha256").update(resetToken).digest("hex");
+	this.passwordResetTokenExpire = Date.now() + 10 * 60 * 1000;
+	console.log(resetToken, this.passwordResetToken);
+	return resetToken;
 };
 
 export const User = mongoose.model("Users", UserSchema);
