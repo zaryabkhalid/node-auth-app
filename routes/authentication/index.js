@@ -5,7 +5,8 @@ import getProfile from "../../controllers/auth/profileController";
 import refreshToken from "../../controllers/auth/refreshController";
 import verifyJWT from "../../middlewares/verifyJwt";
 import logout from "../../controllers/auth/logoutController";
-import verifyUserAccount from "../../controllers/auth/accountVerifyController";
+import verifyUserEmail from "../../controllers/auth/accountVerifySendEmail";
+import accountVerifiedController from "../../controllers/auth/accountVerifyController";
 import resetPassword from "../../controllers/auth/resetPasswordController";
 import forgetPassword from "../../controllers/auth/forgetPasswordController";
 
@@ -18,12 +19,15 @@ const router = express.Router();
 router.post("/register", signup);
 
 /**
- **  GET REQUEST
+ **  GET && PATCH REQUEST
  **  PUBLIC
  **  USER Account Verify
  */
 
-router.get("/verify", verifyUserAccount);
+// Email Sent Route
+router.get("/verify/:id", verifyJWT, verifyUserEmail);
+// Verification Route
+router.patch("/verifyuser/:id", accountVerifiedController);
 
 /**
  **  POST REQUEST

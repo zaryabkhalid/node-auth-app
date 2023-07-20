@@ -1,18 +1,32 @@
-import CustomError from "../../errors/CustomError";
 import asyncErrorHandler from "../../errors/asyncErrorHandler";
+import CustomError from "../../errors/CustomError";
 import { User } from "../../models/authentication/users.model";
+import sendMail from "../../utils/sendEmail";
 
-const verifyUserAccount = asyncErrorHandler(async (req, res, next) => {
-	const id = req.query.id;
-	const userVerify = await User.findOneAndUpdate({ id }, { $set: { isVerified: true } });
-	if (!userVerify) {
-		return next(new CustomError(400, "User Account Verification Failed. kindly try it later"));
+const accountVerifiedController = asyncErrorHandler(async (req, res, next) => {
+	const userID = req.params.id;
+	const verifiedUser = await User.findOneAndUpdate({ _id: userID }, { $set: { isVerified: true } });
+
+	if (!verifiedUser) {
+		const error = new CustomError(500, "User's account cannot be verified. Please try again later");
+		return next(error);
 	}
+
+	try {
+		await sendMail({
+			sendToEmail: verifiedUser.email,
+			subject: "Account Verify Successfully.",
+			message: `Congratulations! ${verifiedUser.username} your account has been Verified.`,
+		});
+	} catch (error) {
+		verifiedUser.isVerified = false;
+		return next(new CustomError(500, "There is a Problem to verifing your account.Please try again later"));
+	}
+
 	res.status(200).json({
-		success: true,
-		statusCode: 200,
-		message: "Account verify",
+		status: "Success",
+		message: "Verification Done!",
 	});
 });
 
-export default verifyUserAccount;
+export default accountVerifiedController;
